@@ -11,7 +11,7 @@ import {
   QUANTITY_FIRST_FIELD,
   QUANTITY_SECOND_FIELD
 } from './constants'
-import { useState } from 'react'
+import { useEffect } from 'react'
 
 const ContainerBox = styled.div`
   padding-top: 5.31vw;
@@ -28,14 +28,10 @@ const GameTicket = styled.div`
 
 
 function App() {
-  const [blur, setBlur] = useState(false);
-
-  
-  const handlerClick = (element, array, length) => {
-    array.push(element.textContent);
-    if(array.length === length) setBlur(true);
-  }
-
+  useEffect(() => {
+    const RANDOM_INDEX = Math.floor(Math.random() * NUMBERS_FIRST_FIELD.length);
+    // const ARR_RANDOM_NUMBERS = 
+  }, [])
   return (
     <>
       <ContainerBox>
@@ -43,26 +39,14 @@ function App() {
           <FieldContainer
             numbers={NUMBERS_FIRST_FIELD}
             text={TEXT_FIRST_FIELD}
-            handlerClick={
-              (e) => handlerClick(
-                e.target, 
-                SELECTION_FIRST_FIELD,
-                QUANTITY_FIRST_FIELD,
-              )
-            }
-            filter={blur}
+            selection={SELECTION_FIRST_FIELD}
+            quantity={QUANTITY_FIRST_FIELD}
           />
           <FieldContainer
             numbers={NUMBERS_SECOND_FIELD}
             text={TEXT_SECOND_FIELD}
-            handlerClick={
-              (e) => handlerClick(
-                e.target, 
-                SELECTION_SECOND_FIELD,
-                QUANTITY_SECOND_FIELD,
-              )
-            }
-            filter={blur}
+            selection={SELECTION_SECOND_FIELD}
+            quantity={QUANTITY_SECOND_FIELD}
           />
         </GameTicket>
       </ContainerBox>

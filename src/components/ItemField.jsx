@@ -1,8 +1,9 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const Item = styled.li`
-    width: 12.2vw;
-    height: 12.2vw;
+    width: ${(props) => props.$selected ? "10.63vw" : "12.2vw"};
+    height: ${(props) => props.$selected ? "10.63vw" : "12.2vw"};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10,13 +11,20 @@ const Item = styled.li`
     border-radius: 1.56vw;
     border: solid .31vw #DDD;
     font-weight: 400;
+    transform: ${(props) => props.$selected ? "scale(.9)" : ''};
+    background-color: ${(props) => props.$selected ? "#FFD205" : ""};
 `
 
 const ItemField = ({number, handlerClick}) => {
+    const [selected, setSelected] = useState(false);
 
     return (
         <Item
-            onClick={handlerClick}
+            $selected={selected}
+            onClick={(e)=>{
+                handlerClick(e);
+                setSelected(true)
+            }}
         >
             {number}
         </Item>

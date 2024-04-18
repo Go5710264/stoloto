@@ -1,5 +1,7 @@
 import ItemField from "./ItemField";
 import styled from "styled-components";
+import { useState } from 'react'
+
 
 const FieldContainer = styled.div`
     width: 100%;
@@ -26,24 +28,36 @@ const FieldDescription = styled.h3`
 const FieldWrapper = styled.div`
     width: 100%;
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     opacity: ${(props) => props.$filter && .5};
 `;
 
-const Field = ({numbers, text, handlerClick, filter}) => {
-  // const [blur, setBlur] = useState(false);
-    
+const Field = ({numbers, text, selection, quantity}) => {
+  const [blur, setBlur] = useState(false);
+
+  const handlerClick = (element, array, length) => {
+    array.push(element.textContent);
+    if(array.length === length) setBlur(true);
+  }    
 
   return (
     <FieldContainer>
       <FieldTitle>{text.title}</FieldTitle>
       <FieldDescription>{text.description}</FieldDescription>
-      <FieldWrapper $filter={filter}>
+      <FieldWrapper $filter={blur}>
         {numbers.map((number, index) => (
           <ItemField 
-            key={index} 
+          // TODO: Заменить key=индекс
+            key={index}
             number={number} 
-            handlerClick={handlerClick}
+            handlerClick={
+              (e) => handlerClick(
+                e.target, 
+                selection,
+                quantity,
+              )
+            }
           />
         ))}
       </FieldWrapper>
