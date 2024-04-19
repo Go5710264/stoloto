@@ -11,7 +11,7 @@ import {
   QUANTITY_FIRST_FIELD,
   QUANTITY_SECOND_FIELD
 } from './constants'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const ContainerBox = styled.div`
   padding-top: 5.31vw;
@@ -25,13 +25,51 @@ const GameTicket = styled.div`
   padding-top: 4.38vw;
   background-color: #fff;
 `
+function randomlyGeneratedNum(arr){
+  const index = Math.floor(Math.random() * arr.length);
+  const number = arr[index];
+  return number; 
+}
 
+function randomlyGeneratedArr(arr){
+  const result = [];
+  
+  if(arr.length === 2) result.push(randomlyGeneratedNum(arr));
+  if(arr.length === 19) {
+    for (let i = 0; i < 8; i++) {
+      let number = randomlyGeneratedNum(arr);
+      const repeatNumber = result.some(item => item === number);
+      if(repeatNumber){
+        i--;
+        continue;
+      }
+      result.push(number);
+    }
+  }
+
+  return result;
+}
 
 function App() {
+  const [selectFirstField, setSelectFirstField] = useState([]);
+  const [selectSecondField, setSelectSecondField] = useState([])
+
   useEffect(() => {
-    const RANDOM_INDEX = Math.floor(Math.random() * NUMBERS_FIRST_FIELD.length);
-    // const ARR_RANDOM_NUMBERS = 
+    const FIRST_RANDOM_ARR = randomlyGeneratedArr(NUMBERS_FIRST_FIELD);
+    const SECOND_RANDOM_ARR = randomlyGeneratedArr(NUMBERS_SECOND_FIELD);
   }, [])
+
+  useEffect(() => {
+    // const FIRST_RANDOM_ARR = randomlyGeneratedArr(NUMBERS_FIRST_FIELD);
+    // const SECOND_RANDOM_ARR = randomlyGeneratedArr(NUMBERS_SECOND_FIELD);
+    // console.log(FIRST_RANDOM_ARR)
+    // console.log(SECOND_RANDOM_ARR)
+    console.log(555)
+  }, [
+    SELECTION_FIRST_FIELD,
+    SELECTION_SECOND_FIELD
+  ])
+
   return (
     <>
       <ContainerBox>
