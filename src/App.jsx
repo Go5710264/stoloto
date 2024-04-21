@@ -10,7 +10,7 @@ import {
   QUANTITY_SECOND_FIELD,
   WINNING_PHRASE
 } from './constants'
-import magicWand from './assets/magicWand.svg'
+import magicWand from '../public/magicWand.svg'
 import { useEffect, useState } from 'react'
 
 const FIRST_RANDOM_ARR = randomlyGeneratedArr(NUMBERS_FIRST_FIELD);
