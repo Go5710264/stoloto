@@ -8,15 +8,13 @@ const FieldContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    row-gap: 3.4vw;
     column-gap: 2.5vw;
-    margin-bottom: 5vw;
-
-    &:last-child{
-      margin-bottom: 0;
-    }
+    margin-bottom: 5.4vw;
 `;
 
 const FieldTitle = styled.h3`
+    padding-left: 1.5vw;
     font-size: 4.38vw;
     font-weight: 400;
 `;
@@ -31,15 +29,20 @@ const FieldWrapper = styled.div`
     align-items: center;
     flex-wrap: wrap;
     opacity: ${(props) => props.$filter && .5};
+    pointer-events: ${(props) => props.$filter && 'none'};
 `;
 
-const Field = ({numbers, text, selection, quantity}) => {
+const Field = ({numbers, text, handlerClick, quantity, storageField, filledField}) => {
   const [blur, setBlur] = useState(false);
 
-  const handlerClick = (element, array, length) => {
-    array.push(element.textContent);
-    if(array.length === length) setBlur(true);
-  }    
+  const addNumberArr = (element) => {
+    handlerClick(preArr =>[...preArr, parseInt(element.textContent)])
+    if(storageField.length === quantity - 1) {
+      setBlur(true);
+      filledField(true);
+    }
+  };
+   
 
   return (
     <FieldContainer>
@@ -51,12 +54,8 @@ const Field = ({numbers, text, selection, quantity}) => {
           // TODO: Заменить key=индекс
             key={index}
             number={number} 
-            handlerClick={
-              (e) => handlerClick(
-                e.target, 
-                selection,
-                quantity,
-              )
+            eventClick={
+              (e) => addNumberArr(e.target)
             }
           />
         ))}

@@ -14,9 +14,8 @@ export const TEXT_SECOND_FIELD = {
     description: 'Отметьте 1 число.'
 }
 
-export const SELECTION_FIRST_FIELD = [];
-export const SELECTION_SECOND_FIELD = [];
-
 export const QUANTITY_FIRST_FIELD = 8;
 export const QUANTITY_SECOND_FIELD = 1;
+
+export const WINNING_PHRASE = 'Ого, вы выиграли! Поздравляем!';
 
