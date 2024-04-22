@@ -12,7 +12,7 @@ import {
   LOSING_PHRASE
 } from './constants'
 import magicWand from '../public/magicWand.svg'
-import { useEffect, useState, useSyncExternalStore } from 'react'
+import { useEffect, useState } from 'react'
 
 const FIRST_RANDOM_ARR = randomlyGeneratedArr(NUMBERS_FIRST_FIELD);
 const SECOND_RANDOM_ARR = randomlyGeneratedArr(NUMBERS_SECOND_FIELD);
