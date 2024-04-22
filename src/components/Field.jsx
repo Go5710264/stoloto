@@ -52,7 +52,6 @@ const Field = ({numbers, text, handlerClick, quantity, storageField, filledField
       <FieldWrapper $filter={blur}>
         {numbers.map((number, index) => (
           <ItemField 
-          // TODO: Заменить key=индекс
             key={index}
             number={number} 
             eventClick={
