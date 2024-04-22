@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import './App.css'
 import FieldContainer from './components/Field'
 import { 
@@ -8,13 +8,19 @@ import {
   TEXT_SECOND_FIELD,
   QUANTITY_FIRST_FIELD,
   QUANTITY_SECOND_FIELD,
-  WINNING_PHRASE
+  WINNING_PHRASE,
+  LOSING_PHRASE
 } from './constants'
 import magicWand from '../public/magicWand.svg'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 
 const FIRST_RANDOM_ARR = randomlyGeneratedArr(NUMBERS_FIRST_FIELD);
 const SECOND_RANDOM_ARR = randomlyGeneratedArr(NUMBERS_SECOND_FIELD);
+
+const fontDefault = css`
+    font-size: 4.38vw;
+    font-weight: 300;
+`
 
 const ContainerBox = styled.div`
   padding-top: 5.31vw;
@@ -48,9 +54,15 @@ const TicketIcon = styled.div`
 `
 
 const TextСongratulations = styled.h3`
-    font-size: 4.38vw;
-    font-weight: 300;
+    margin-bottom: 86.88vw;
+    ${fontDefault};
 `;
+
+const TextLosing = styled.h4`
+    text-align: center;
+    margin-bottom: 3vw;
+    ${fontDefault};
+`
 
 const ButtonResult = styled.button`
   display: block;
@@ -107,7 +119,8 @@ function App() {
   const [filledFieldFirst, setFilledFieldFirst] = useState(false);
   const [filledFieldSecond, setFilledFieldSecond] = useState(false);
   const [activateButton, setActivateButton] = useState(false)
-  const [showPrize, setShowPrize] = useState(false)
+  const [showPrize, setShowPrize] = useState(false);
+  const [losingGame, setLosingGame] = useState(false);
   
   useEffect(() => {
     filledFieldFirst && filledFieldSecond && setActivateButton(true);
@@ -121,8 +134,9 @@ function App() {
     const resultFirstField = comparingArrays(selectFirstField,FIRST_RANDOM_ARR);
     const resultSecondField = comparingArrays(selectSecondField,SECOND_RANDOM_ARR);
   
-    if(resultFirstField.size <= 12) setShowPrize(true);
-    if(resultFirstField.size === 13 && resultSecondField.size === 1) setShowPrize(true);
+    if(resultFirstField.size <= 12) return setShowPrize(true);
+    if(resultFirstField.size === 13 && resultSecondField.size === 1) return setShowPrize(true);
+    return setLosingGame(true)
   } 
 
   return (
@@ -158,6 +172,7 @@ function App() {
                 storageField={selectSecondField}
                 filledField={setFilledFieldSecond}
               />
+              {losingGame && <TextLosing>{LOSING_PHRASE}</TextLosing>}
               <ButtonResult
                 $active={activateButton}
                 onClick={showResult}

@@ -18,4 +18,5 @@ export const QUANTITY_FIRST_FIELD = 8;
 export const QUANTITY_SECOND_FIELD = 1;
 
 export const WINNING_PHRASE = 'Ого, вы выиграли! Поздравляем!';
+export const LOSING_PHRASE = 'Вы выиграли! Перезагрузите страницу';
 
