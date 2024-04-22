@@ -11,11 +11,15 @@ import {
   WINNING_PHRASE,
   LOSING_PHRASE
 } from './constants'
+import { 
+  FIRST_RANDOM_ARR, 
+  SECOND_RANDOM_ARR 
+} from './randomArr'
+
 import magicWand from '../public/magicWand.svg'
 import { useEffect, useState } from 'react'
 
-const FIRST_RANDOM_ARR = randomlyGeneratedArr(NUMBERS_FIRST_FIELD);
-const SECOND_RANDOM_ARR = randomlyGeneratedArr(NUMBERS_SECOND_FIELD);
+
 
 const fontDefault = css`
     font-size: 4.38vw;
@@ -79,31 +83,6 @@ const ButtonResult = styled.button`
   pointer-events: ${(props) => props.$active ? '' : 'none'};
 
 `
-
-function randomlyGeneratedNum(arr){
-  const index = Math.floor(Math.random() * arr.length);
-  const number = arr[index];
-  return number; 
-}
-
-function randomlyGeneratedArr(arr){
-  const result = [];
-  
-  if(arr.length === 2) result.push(randomlyGeneratedNum(arr));
-  if(arr.length === 19) {
-    for (let i = 0; i < 8; i++) {
-      let number = randomlyGeneratedNum(arr);
-      const repeatNumber = result.some(item => item === number);
-      if(repeatNumber){
-        i--;
-        continue;
-      }
-      result.push(number);
-    }
-  }
-
-  return result;
-}
 
 function comparingArrays(arrUser, arrGenerated){
   const newSet = new Set();
