@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
+import PropTypes from 'prop-types';
+
 
 const Item = styled.li`
     width: ${(props) => props.$selected ? "10.63vw" : "12.2vw"};
@@ -29,6 +31,10 @@ const ItemField = ({number, eventClick}) => {
             {number}
         </Item>
     )
+}
+ItemField.propTypes = {
+    number: PropTypes.number,
+    eventClick: PropTypes.func,
 }
 
 export default ItemField;

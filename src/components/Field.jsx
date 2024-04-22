@@ -1,4 +1,5 @@
 import ItemField from "./ItemField";
+import PropTypes from 'prop-types';
 import styled from "styled-components";
 import { useState } from 'react'
 
@@ -63,5 +64,14 @@ const Field = ({numbers, text, handlerClick, quantity, storageField, filledField
     </FieldContainer>
   );
 };
+
+Field.propTypes = {
+  numbers: PropTypes.array,
+  text: PropTypes.object,
+  handlerClick: PropTypes.func,
+  quantity: PropTypes.number,
+  storageField: PropTypes.array,
+  filledField: PropTypes.func,
+}
 
 export default Field;
