@@ -17,9 +17,11 @@ const Item = styled.li`
     background-color: ${(props) => props.$selected ? "#FFD205" : ""};
 `
 
-const ItemField = ({number, eventClick}) => {
+const ItemField = ({number, eventClick, generated}) => {
     const [selected, setSelected] = useState(false);
-
+    if(generated) 
+        // eventClick(number) && 
+        setSelected(true);
     return (
         <Item
             $selected={selected}

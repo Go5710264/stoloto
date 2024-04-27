@@ -13,7 +13,8 @@ import {
 } from './constants'
 import { 
   FIRST_RANDOM_ARR, 
-  SECOND_RANDOM_ARR 
+  SECOND_RANDOM_ARR, 
+  randomlyGeneratedArr
 } from './randomArr'
 
 import magicWand from '../public/magicWand.svg'
@@ -101,6 +102,7 @@ function App() {
   const [showPrize, setShowPrize] = useState(false);
   const [losingGame, setLosingGame] = useState(false);
   
+  // TODO: возможно нужно сделать проверку на длинну массива (лучше ее вынести в отдельную переменную)
   useEffect(() => {
     filledFieldFirst && filledFieldSecond && setActivateButton(true);
   }, [
@@ -110,13 +112,23 @@ function App() {
 
   function showResult(){
     if(!activateButton) return false;
+
     const resultFirstField = comparingArrays(selectFirstField,FIRST_RANDOM_ARR);
     const resultSecondField = comparingArrays(selectSecondField,SECOND_RANDOM_ARR);
+
   
     if(resultFirstField.size <= 12) return setShowPrize(true);
     if(resultFirstField.size === 13 && resultSecondField.size === 1) return setShowPrize(true);
     return setLosingGame(true)
-  } 
+  }
+  
+  function clickMagicWand(){
+    setSelectFirstField(randomlyGeneratedArr(NUMBERS_FIRST_FIELD));
+    setSelectSecondField(randomlyGeneratedArr(NUMBERS_SECOND_FIELD));
+    // TODO: можно генерировать массив объектов, но это сложно, и нужно делать жесткий рефакторинг
+    // filledFieldFirst(true)
+    // filledFieldSecond(true)
+  }
 
   return (
     <>
@@ -126,7 +138,10 @@ function App() {
             <TicketNumber>
               Билет 1
             </TicketNumber>
-            <TicketIcon>
+            {/* TODO: чтото не так со стилями иконки, выходит за пределы контейнера */}
+            <TicketIcon
+              onClick={clickMagicWand}
+            >
               <img src={magicWand} alt="Icon" />
             </TicketIcon>
           </TicketTitle>

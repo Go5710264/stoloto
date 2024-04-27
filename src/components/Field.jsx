@@ -57,6 +57,7 @@ const Field = ({numbers, text, handlerClick, quantity, storageField, filledField
             eventClick={
               (e) => addNumberArr(e.target)
             }
+            // generated={storageField.length === quantity-1 && storageField.some(item => item === number)}
           />
         ))}
       </FieldWrapper>
