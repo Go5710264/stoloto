@@ -19,12 +19,9 @@ const Item = styled.li`
 
 const ItemField = ({number, eventClick, generated}) => {
     const [selected, setSelected] = useState(false);
-    if(generated) 
-        // eventClick(number) && 
-        setSelected(true);
     return (
         <Item
-            $selected={selected}
+            $selected={generated ? true : selected}
             onClick={(e)=>{
                 eventClick(e);
                 setSelected(true)
@@ -34,9 +31,11 @@ const ItemField = ({number, eventClick, generated}) => {
         </Item>
     )
 }
+
 ItemField.propTypes = {
     number: PropTypes.number,
     eventClick: PropTypes.func,
+    generated: PropTypes.bool
 }
 
 export default ItemField;

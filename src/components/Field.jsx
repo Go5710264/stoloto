@@ -19,6 +19,7 @@ const FieldTitle = styled.h3`
     font-size: 4.38vw;
     font-weight: 400;
 `;
+
 const FieldDescription = styled.h3`
     font-size: 4.38vw;
     font-weight: 300;
@@ -33,10 +34,11 @@ const FieldWrapper = styled.div`
     pointer-events: ${(props) => props.$filter && 'none'};
 `;
 
-const Field = ({numbers, text, handlerClick, quantity, storageField, filledField}) => {
+const Field = ({numbers, text, handlerClick, quantity, storageField, filledField, blockRandomGen}) => {
   const [blur, setBlur] = useState(false);
 
   const addNumberArr = (element) => {
+    if(storageField.length === 0) blockRandomGen(true) 
     handlerClick(preArr =>[...preArr, parseInt(element.textContent)])
     if(storageField.length === quantity - 1) {
       setBlur(true);
@@ -49,17 +51,18 @@ const Field = ({numbers, text, handlerClick, quantity, storageField, filledField
     <FieldContainer>
       <FieldTitle>{text.title}</FieldTitle>
       <FieldDescription>{text.description}</FieldDescription>
-      <FieldWrapper $filter={blur}>
+      <FieldWrapper $filter={storageField.length === quantity ? true : blur}>
         {numbers.map((number, index) => (
-          <ItemField 
-            key={index}
-            number={number} 
-            eventClick={
-              (e) => addNumberArr(e.target)
-            }
-            // generated={storageField.length === quantity-1 && storageField.some(item => item === number)}
-          />
-        ))}
+            <ItemField 
+              key={index}
+              number={number} 
+              eventClick={
+                (e) => addNumberArr(e.target)
+              }
+              generated={storageField.some(item => item === number)}
+            />
+          ))
+        }
       </FieldWrapper>
     </FieldContainer>
   );
@@ -72,6 +75,7 @@ Field.propTypes = {
   quantity: PropTypes.number,
   storageField: PropTypes.array,
   filledField: PropTypes.func,
+  blockRandomGen: PropTypes.func
 }
 
 export default Field;

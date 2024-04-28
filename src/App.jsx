@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components'
 import './App.css'
 import FieldContainer from './components/Field'
+import Icon from './components/TicketIcon'
+import TicketNumber from './components/TicketNumber'
 import { 
   NUMBERS_FIRST_FIELD, 
   NUMBERS_SECOND_FIELD, 
@@ -19,8 +21,6 @@ import {
 
 import magicWand from '../public/magicWand.svg'
 import { useEffect, useState } from 'react'
-
-
 
 const fontDefault = css`
     font-size: 4.38vw;
@@ -46,16 +46,6 @@ const TicketTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
-
-const TicketNumber = styled.h4`
-  font-size: 5vw;
-  line-height: 1;
-`
-
-const TicketIcon = styled.div`
-  width: 5.63vw;
-  height: 5.63vw;
 `
 
 const TextСongratulations = styled.h3`
@@ -101,13 +91,13 @@ function App() {
   const [activateButton, setActivateButton] = useState(false)
   const [showPrize, setShowPrize] = useState(false);
   const [losingGame, setLosingGame] = useState(false);
+  const [iconBlur, setIconBlur] = useState(false);
   
-  // TODO: возможно нужно сделать проверку на длинну массива (лучше ее вынести в отдельную переменную)
   useEffect(() => {
     filledFieldFirst && filledFieldSecond && setActivateButton(true);
   }, [
     filledFieldFirst,
-    filledFieldSecond
+    filledFieldSecond,
   ])
 
   function showResult(){
@@ -115,7 +105,6 @@ function App() {
 
     const resultFirstField = comparingArrays(selectFirstField,FIRST_RANDOM_ARR);
     const resultSecondField = comparingArrays(selectSecondField,SECOND_RANDOM_ARR);
-
   
     if(resultFirstField.size <= 12) return setShowPrize(true);
     if(resultFirstField.size === 13 && resultSecondField.size === 1) return setShowPrize(true);
@@ -125,9 +114,10 @@ function App() {
   function clickMagicWand(){
     setSelectFirstField(randomlyGeneratedArr(NUMBERS_FIRST_FIELD));
     setSelectSecondField(randomlyGeneratedArr(NUMBERS_SECOND_FIELD));
-    // TODO: можно генерировать массив объектов, но это сложно, и нужно делать жесткий рефакторинг
-    // filledFieldFirst(true)
-    // filledFieldSecond(true)
+    setIconBlur(true)
+    
+    setFilledFieldFirst(true)
+    setFilledFieldSecond(true)
   }
 
   return (
@@ -135,15 +125,13 @@ function App() {
       <ContainerBox>
         <GameTicket>
           <TicketTitle>
-            <TicketNumber>
-              Билет 1
-            </TicketNumber>
-            {/* TODO: чтото не так со стилями иконки, выходит за пределы контейнера */}
-            <TicketIcon
-              onClick={clickMagicWand}
-            >
-              <img src={magicWand} alt="Icon" />
-            </TicketIcon>
+            <TicketNumber>Билет 1</TicketNumber>
+            <Icon
+              imgPath={magicWand}
+              alt={'Icon'}
+              blur={iconBlur}
+              handlerClick={clickMagicWand}
+            />
           </TicketTitle>
           {showPrize ? 
             (
@@ -157,6 +145,7 @@ function App() {
                 quantity={QUANTITY_FIRST_FIELD}
                 storageField={selectFirstField}
                 filledField={setFilledFieldFirst}
+                blockRandomGen={setIconBlur}
               />
               <FieldContainer
                 numbers={NUMBERS_SECOND_FIELD}
@@ -165,6 +154,7 @@ function App() {
                 quantity={QUANTITY_SECOND_FIELD}
                 storageField={selectSecondField}
                 filledField={setFilledFieldSecond}
+                blockRandomGen={setIconBlur}
               />
               {losingGame && <TextLosing>{LOSING_PHRASE}</TextLosing>}
               <ButtonResult
